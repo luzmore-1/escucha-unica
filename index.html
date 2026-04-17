@@ -3,18 +3,70 @@
 <html>
 <head>
   <title>Escucha única</title>
+
+  <style>
+    body {
+      margin: 0;
+      background: #0d0d0d;
+      color: #f2f2f2;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .contenedor {
+      text-align: center;
+      max-width: 400px;
+    }
+
+    h2 {
+      font-weight: normal;
+      font-size: 18px;
+      opacity: 0.8;
+      margin-bottom: 20px;
+    }
+
+    button {
+      background: none;
+      border: 1px solid #f2f2f2;
+      color: #f2f2f2;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background: #f2f2f2;
+      color: #0d0d0d;
+    }
+
+    audio {
+      display: none;
+    }
+  </style>
+
 </head>
+
 <body>
 
-  <h2 id="mensaje">Cargando...</h2>
+  <div class="contenedor">
+    <h2 id="mensaje">Cargando...</h2>
+    <button id="boton" style="display:none;">Iniciar escucha</button>
 
-  <audio id="audio" controls controlsList="nodownload" style="display:none;">
-    <source src="./audio.mp3" type="audio/mpeg">
-    Tu navegador no soporta audio.
-  </audio>
+```
+<audio id="audio">
+  <source src="./audio.mp3" type="audio/mpeg">
+</audio>
+```
+
+  </div>
 
   <script>
     const mensaje = document.getElementById("mensaje");
+    const boton = document.getElementById("boton");
     const audio = document.getElementById("audio");
 
     const usada = localStorage.getItem("escucha_unica");
@@ -22,15 +74,18 @@
     if (usada) {
       mensaje.innerText = "Esta obra ya fue escuchada.";
     } else {
-      mensaje.innerText = "Haz clic en reproducir para escuchar";
-      audio.style.display = "block";
+      mensaje.innerText = "Una sola escucha disponible";
+      boton.style.display = "inline-block";
 
       let marcada = false;
 
-      audio.addEventListener("play", () => {
+      boton.addEventListener("click", () => {
+        audio.play();
+        mensaje.innerText = "Reproduciendo...";
+        boton.style.display = "none";
+
         if (!marcada) {
           localStorage.setItem("escucha_unica", "true");
-          mensaje.innerText = "Reproduciendo...";
           marcada = true;
         }
       });
