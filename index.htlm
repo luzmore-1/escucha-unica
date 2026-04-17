@@ -1,26 +1,28 @@
-  
-<!DOCTYPE html>  
-<html>  
-<head>  
-<title>Escucha única</title>  
-</head>  
-<body>  
-<h2 id="mensaje">Cargando...</h2>  
-  
-<audio id="audio" controls autoplay style="display:none;">  
-<source src="audio.mp3" type="audio/mpeg">  
-</audio>  
-  
-<script>  
-const usada = localStorage.getItem("escucha_unica");  
-  
-if (usada) {  
-document.getElementById("mensaje").innerText = "Esta obra ya fue escuchada.";  
-} else {  
-document.getElementById("mensaje").innerText = "Reproduciendo...";  
-document.getElementById("audio").style.display = "block";  
-localStorage.setItem("escucha_unica", "true");  
-}  
-</script>  
-</body>  
-</html>  
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Escucha única</title>
+</head>
+<body>
+  <h2 id="mensaje">Cargando...</h2>
+
+  <audio id="audio" controls autoplay style="display:none;">
+    <source src="./audio.mp3" type="audio/mpeg">
+    Tu navegador no soporta audio.
+  </audio>
+
+  <script>
+    const usada = localStorage.getItem("escucha_unica");
+
+    if (usada) {
+      document.getElementById("mensaje").innerText = "Esta obra ya fue escuchada.";
+    } else {
+      document.getElementById("mensaje").innerText = "Reproduciendo...";
+      const audio = document.getElementById("audio");
+      audio.style.display = "block";
+      audio.play();
+      localStorage.setItem("escucha_unica", "true");
+    }
+  </script>
+</body>
+</html>
